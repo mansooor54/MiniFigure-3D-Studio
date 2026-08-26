@@ -1,0 +1,405 @@
+{
+  "$defs": {
+    "CapabilityFlag": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "enabled"
+      ],
+      "title": "CapabilityFlag",
+      "type": "object"
+    },
+    "DeviceMode": {
+      "enum": [
+        "automatic",
+        "cpu",
+        "gpu"
+      ],
+      "title": "DeviceMode",
+      "type": "string"
+    },
+    "EngineFile": {
+      "additionalProperties": false,
+      "properties": {
+        "relative_path": {
+          "title": "Relative Path",
+          "type": "string"
+        },
+        "sha256": {
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "exclusiveMinimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "relative_path",
+        "sha256",
+        "size_bytes"
+      ],
+      "title": "EngineFile",
+      "type": "object"
+    },
+    "EngineLicense": {
+      "additionalProperties": false,
+      "properties": {
+        "acceptance_required": {
+          "title": "Acceptance Required",
+          "type": "boolean"
+        },
+        "allowed_territories": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Allowed Territories",
+          "type": "array"
+        },
+        "commercial_use_allowed": {
+          "title": "Commercial Use Allowed",
+          "type": "boolean"
+        },
+        "excluded_territories": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Excluded Territories",
+          "type": "array"
+        },
+        "identifier": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Identifier",
+          "type": "string"
+        },
+        "license_text_sha256": {
+          "title": "License Text Sha256",
+          "type": "string"
+        },
+        "redistribution_allowed": {
+          "title": "Redistribution Allowed",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "identifier",
+        "license_text_sha256",
+        "acceptance_required",
+        "redistribution_allowed",
+        "commercial_use_allowed"
+      ],
+      "title": "EngineLicense",
+      "type": "object"
+    },
+    "EngineType": {
+      "enum": [
+        "generator",
+        "background_remover",
+        "blender",
+        "colmap"
+      ],
+      "title": "EngineType",
+      "type": "string"
+    },
+    "GeneratorCapabilities": {
+      "additionalProperties": false,
+      "properties": {
+        "adapter_id": {
+          "title": "Adapter Id",
+          "type": "string"
+        },
+        "adapter_version": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Adapter Version",
+          "type": "string"
+        },
+        "maximum_image_count": {
+          "maximum": 6,
+          "minimum": 1,
+          "title": "Maximum Image Count",
+          "type": "integer"
+        },
+        "minimum_image_count": {
+          "maximum": 6,
+          "minimum": 1,
+          "title": "Minimum Image Count",
+          "type": "integer"
+        },
+        "output_formats": {
+          "items": {
+            "$ref": "#/$defs/MeshFormat"
+          },
+          "title": "Output Formats",
+          "type": "array"
+        },
+        "resources": {
+          "$ref": "#/$defs/ResourceRequirements"
+        },
+        "supported_device_modes": {
+          "items": {
+            "$ref": "#/$defs/DeviceMode"
+          },
+          "title": "Supported Device Modes",
+          "type": "array"
+        },
+        "supported_style_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Supported Style Ids",
+          "type": "array"
+        },
+        "supports_cancel": {
+          "title": "Supports Cancel",
+          "type": "boolean"
+        },
+        "supports_multi_image_conditioning": {
+          "title": "Supports Multi Image Conditioning",
+          "type": "boolean"
+        },
+        "supports_pause": {
+          "title": "Supports Pause",
+          "type": "boolean"
+        },
+        "supports_seed": {
+          "title": "Supports Seed",
+          "type": "boolean"
+        },
+        "supports_textures": {
+          "title": "Supports Textures",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "adapter_id",
+        "adapter_version",
+        "minimum_image_count",
+        "maximum_image_count",
+        "supports_multi_image_conditioning",
+        "supports_textures",
+        "supports_seed",
+        "supports_pause",
+        "supports_cancel",
+        "supported_device_modes",
+        "supported_style_ids",
+        "output_formats",
+        "resources"
+      ],
+      "title": "GeneratorCapabilities",
+      "type": "object"
+    },
+    "MeshFormat": {
+      "enum": [
+        "stl",
+        "obj",
+        "glb",
+        "blend",
+        "3mf",
+        "ply"
+      ],
+      "title": "MeshFormat",
+      "type": "string"
+    },
+    "ResourceRequirements": {
+      "additionalProperties": false,
+      "properties": {
+        "minimum_disk_mb": {
+          "minimum": 0,
+          "title": "Minimum Disk Mb",
+          "type": "integer"
+        },
+        "minimum_ram_mb": {
+          "minimum": 0,
+          "title": "Minimum Ram Mb",
+          "type": "integer"
+        },
+        "minimum_vram_mb": {
+          "minimum": 0,
+          "title": "Minimum Vram Mb",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "minimum_ram_mb",
+        "minimum_vram_mb",
+        "minimum_disk_mb"
+      ],
+      "title": "ResourceRequirements",
+      "type": "object"
+    },
+    "SelfTestDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "arguments": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Arguments",
+          "type": "array"
+        },
+        "entrypoint_relative_path": {
+          "title": "Entrypoint Relative Path",
+          "type": "string"
+        },
+        "expected_result_relative_path": {
+          "title": "Expected Result Relative Path",
+          "type": "string"
+        },
+        "timeout_seconds": {
+          "exclusiveMinimum": 0,
+          "maximum": 3600,
+          "title": "Timeout Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "entrypoint_relative_path",
+        "timeout_seconds",
+        "expected_result_relative_path"
+      ],
+      "title": "SelfTestDefinition",
+      "type": "object"
+    }
+  },
+  "$id": "https://minifigure3dstudio.local/schemas/engine-manifest-v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "capability_flags": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/CapabilityFlag"
+      },
+      "title": "Capability Flags",
+      "type": "array"
+    },
+    "display_name": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Display Name",
+      "type": "string"
+    },
+    "engine_id": {
+      "title": "Engine Id",
+      "type": "string"
+    },
+    "engine_type": {
+      "$ref": "#/$defs/EngineType"
+    },
+    "executable_relative_path": {
+      "title": "Executable Relative Path",
+      "type": "string"
+    },
+    "files": {
+      "items": {
+        "$ref": "#/$defs/EngineFile"
+      },
+      "title": "Files",
+      "type": "array"
+    },
+    "generator_capabilities": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/GeneratorCapabilities"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "license": {
+      "$ref": "#/$defs/EngineLicense"
+    },
+    "model_revision": {
+      "anyOf": [
+        {
+          "maxLength": 200,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Model Revision"
+    },
+    "model_sha256": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Model Sha256"
+    },
+    "package_sha256": {
+      "title": "Package Sha256",
+      "type": "string"
+    },
+    "protocol_version": {
+      "exclusiveMinimum": 0,
+      "title": "Protocol Version",
+      "type": "integer"
+    },
+    "resources": {
+      "$ref": "#/$defs/ResourceRequirements"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "self_test": {
+      "$ref": "#/$defs/SelfTestDefinition"
+    },
+    "source_url": {
+      "format": "uri",
+      "minLength": 1,
+      "title": "Source Url",
+      "type": "string"
+    },
+    "version": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "engine_id",
+    "display_name",
+    "engine_type",
+    "version",
+    "protocol_version",
+    "source_url",
+    "package_sha256",
+    "executable_relative_path",
+    "license",
+    "resources",
+    "files",
+    "self_test"
+  ],
+  "title": "EngineManifest",
+  "type": "object"
+}

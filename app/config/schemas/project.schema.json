@@ -1,0 +1,179 @@
+{
+  "$defs": {
+    "CurrentArtifactSlot": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "format": "uuid",
+          "title": "Artifact Id",
+          "type": "string"
+        },
+        "role": {
+          "title": "Role",
+          "type": "string"
+        }
+      },
+      "required": [
+        "role",
+        "artifact_id"
+      ],
+      "title": "CurrentArtifactSlot",
+      "type": "object"
+    },
+    "ProjectLocale": {
+      "enum": [
+        "en",
+        "ar"
+      ],
+      "title": "ProjectLocale",
+      "type": "string"
+    },
+    "ProjectMode": {
+      "enum": [
+        "fast_ai",
+        "accurate_scan"
+      ],
+      "title": "ProjectMode",
+      "type": "string"
+    },
+    "ProjectState": {
+      "enum": [
+        "active",
+        "recovery_required",
+        "archived"
+      ],
+      "title": "ProjectState",
+      "type": "string"
+    },
+    "SettingsReference": {
+      "additionalProperties": false,
+      "properties": {
+        "relative_path": {
+          "title": "Relative Path",
+          "type": "string"
+        },
+        "sha256": {
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "relative_path",
+        "sha256"
+      ],
+      "title": "SettingsReference",
+      "type": "object"
+    }
+  },
+  "$id": "https://minifigure3dstudio.local/schemas/project-v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifact_ids": {
+      "default": [],
+      "items": {
+        "format": "uuid",
+        "type": "string"
+      },
+      "title": "Artifact Ids",
+      "type": "array"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "current_artifacts": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/CurrentArtifactSlot"
+      },
+      "title": "Current Artifacts",
+      "type": "array"
+    },
+    "locale": {
+      "$ref": "#/$defs/ProjectLocale"
+    },
+    "mode": {
+      "$ref": "#/$defs/ProjectMode"
+    },
+    "model_name": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Model Name",
+      "type": "string"
+    },
+    "project_id": {
+      "format": "uuid",
+      "title": "Project Id",
+      "type": "string"
+    },
+    "project_name": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Project Name",
+      "type": "string"
+    },
+    "run_ids": {
+      "default": [],
+      "items": {
+        "format": "uuid",
+        "type": "string"
+      },
+      "title": "Run Ids",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "settings": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SettingsReference"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "source_image_ids": {
+      "default": [],
+      "items": {
+        "format": "uuid",
+        "type": "string"
+      },
+      "title": "Source Image Ids",
+      "type": "array"
+    },
+    "state": {
+      "$ref": "#/$defs/ProjectState",
+      "default": "active"
+    },
+    "subject_permission_acknowledged_at": {
+      "format": "date-time",
+      "title": "Subject Permission Acknowledged At",
+      "type": "string"
+    },
+    "updated_at": {
+      "format": "date-time",
+      "title": "Updated At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "project_id",
+    "project_name",
+    "model_name",
+    "locale",
+    "mode",
+    "created_at",
+    "updated_at",
+    "subject_permission_acknowledged_at"
+  ],
+  "title": "Project",
+  "type": "object"
+}

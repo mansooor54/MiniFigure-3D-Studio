@@ -14,7 +14,7 @@ B02 establishes deterministic tests, synthetic person-free fixtures, asset-polic
 
 | File | Purpose |
 |---|---|
-| `tests/conftest.py` | Deterministic clocks/IDs, Arabic project roots, and Qt test-environment preparation. |
+| `tests/conftest.py` | Deterministic clocks/IDs, Arabic project roots, and in-suite Qt environment preservation. |
 | `tests/test_smoke.py` | Python fixture, Arabic path, and live Qt widget smoke tests. |
 | `tests/unit/test_asset_foundation.py` | Determinism, manifest, tamper, unmanifested-file, and real-person-policy tests. |
 | `tests/unit/test_project_metadata.py` | Runtime/dev requirement synchronization and Python-version pin tests. |
@@ -69,7 +69,7 @@ Repeated generation produced identical file hashes. Seeded unmanifested files, t
 | SBOM | Passed | Reproducible CycloneDX JSON validated and contained all direct dependencies within 75 environment components. |
 | License inventory | Passed for development review | Seventy-five installed packages and 17 direct dependencies were inventoried; available license texts were copied; no item remained `UNKNOWN`. |
 | Workflow configuration | Passed | Tests confirmed read-only contents permission, Linux/macOS matrix, and no `pull_request_target`. |
-| Qt smoke | Passed | PySide6 6.10.3 and pytest-qt created and processed a widget with the test environment repair. |
+| Qt smoke | Passed | PySide6 6.10.3 and pytest-qt created and processed a widget through the pre-pytest environment repair. |
 
 Generated SBOM, audit, and license files remain under ignored `reports/generated/`; CI uploads them as short-lived evidence rather than committing machine-specific inventories.
 
@@ -81,7 +81,7 @@ Generated SBOM, audit, and license files remain under ignored `reports/generated
 | mypy saw the scripts twice under different module names | Added `scripts/__init__.py`; strict typing then exposed and drove fixes for metadata/path narrowing. |
 | pytest could not import development scripts | Added an explicit repository-root `pythonpath` to pytest configuration without packaging scripts into the runtime. |
 | PySide6 6.9.3 aborted when QtTest initialized an offscreen platform on macOS 26 | Raised the allowed baseline to PySide6 6.10; installed 6.10.3 and repeated the exact probe successfully. |
-| `uv` extraction marked PySide6 platform plugins hidden on macOS | `tests/conftest.py` clears that flag before pytest-qt imports plugins; the repair is conditional to macOS. |
+| `uv` extraction marked PySide6 platform plugins hidden on macOS | `scripts/run_tests.py` clears that flag before importing pytest/pytest-qt; conftest preserves the controlled Qt variables inside the suite. The repair is conditional to macOS. |
 | Initial pytest 8.4.2 had `PYSEC-2026-1845` | Raised the floor to 9.0.3; installed 9.1.1; repeat audit passed. |
 | CycloneDX received the interpreter path and found only pip/setuptools | Passed the virtual-environment root; the SBOM then contained 75 components and all direct dependencies. |
 | Eight packages lacked modern license-expression metadata | Fell back to specific Trove license classifiers while preserving classifier and copied-text evidence; unknown count became zero. |

@@ -76,4 +76,4 @@ Every batch report records the following fields.
 
 ## Local B02 Quality Sequence
 
-From the repository root with the Python 3.11 environment active, the local portable lane runs the fixture generator, asset validator, Ruff, mypy, pytest, dependency audit, SBOM generator, and license collector. The GitHub workflow mirrors that lane on Linux and macOS. Native Windows jobs are added only when a Windows runner and Windows-specific implementation exist.
+From the repository root with the Python 3.11 environment active, the local portable lane runs the fixture generator, asset validator, Ruff, mypy, `python scripts/run_tests.py -q`, dependency audit, SBOM generator, and license collector. The launcher repairs macOS PySide6 plugin visibility before importing pytest; direct `pytest` is not the approved macOS gate. The GitHub workflow mirrors that lane on Linux and macOS. Native Windows jobs are added only when a Windows runner and Windows-specific implementation exist.

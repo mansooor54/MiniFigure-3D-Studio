@@ -1,0 +1,258 @@
+{
+  "$defs": {
+    "ArtifactReference": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "format": "uuid",
+          "title": "Artifact Id",
+          "type": "string"
+        },
+        "relative_path": {
+          "title": "Relative Path",
+          "type": "string"
+        },
+        "role": {
+          "title": "Role",
+          "type": "string"
+        },
+        "sha256": {
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "artifact_id",
+        "role",
+        "relative_path",
+        "sha256"
+      ],
+      "title": "ArtifactReference",
+      "type": "object"
+    },
+    "ErrorCategory": {
+      "enum": [
+        "dependency",
+        "hardware",
+        "input",
+        "privacy_license",
+        "engine",
+        "geometry",
+        "export",
+        "user_action",
+        "infrastructure"
+      ],
+      "title": "ErrorCategory",
+      "type": "string"
+    },
+    "ErrorCause": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "summary": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "summary"
+      ],
+      "title": "ErrorCause",
+      "type": "object"
+    },
+    "ErrorInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "$ref": "#/$defs/ErrorCategory"
+        },
+        "causal_chain": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/ErrorCause"
+          },
+          "maxItems": 8,
+          "title": "Causal Chain",
+          "type": "array"
+        },
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "details": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/SafeDetail"
+          },
+          "title": "Details",
+          "type": "array"
+        },
+        "remediation_keys": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Remediation Keys",
+          "type": "array"
+        },
+        "retryable": {
+          "title": "Retryable",
+          "type": "boolean"
+        },
+        "technical_summary": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Technical Summary",
+          "type": "string"
+        },
+        "user_message_key": {
+          "title": "User Message Key",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "category",
+        "user_message_key",
+        "technical_summary",
+        "retryable"
+      ],
+      "title": "ErrorInfo",
+      "type": "object"
+    },
+    "SafeDetail": {
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "title": "Key",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ],
+      "title": "SafeDetail",
+      "type": "object"
+    },
+    "StageStatus": {
+      "enum": [
+        "succeeded",
+        "succeeded_with_warnings",
+        "failed",
+        "cancelled",
+        "blocked"
+      ],
+      "title": "StageStatus",
+      "type": "string"
+    }
+  },
+  "$id": "https://minifigure3dstudio.local/schemas/worker-result-v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifacts": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ArtifactReference"
+      },
+      "title": "Artifacts",
+      "type": "array"
+    },
+    "checkpoint_id": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Checkpoint Id"
+    },
+    "error": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ErrorInfo"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "finished_at": {
+      "format": "date-time",
+      "title": "Finished At",
+      "type": "string"
+    },
+    "protocol_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Protocol Version",
+      "type": "integer"
+    },
+    "run_id": {
+      "format": "uuid",
+      "title": "Run Id",
+      "type": "string"
+    },
+    "stage_id": {
+      "title": "Stage Id",
+      "type": "string"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/StageStatus"
+    },
+    "warning_codes": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Warning Codes",
+      "type": "array"
+    }
+  },
+  "required": [
+    "run_id",
+    "stage_id",
+    "status",
+    "started_at",
+    "finished_at"
+  ],
+  "title": "StageResult",
+  "type": "object"
+}

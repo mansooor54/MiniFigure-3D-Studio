@@ -17,6 +17,9 @@ All notable project changes will be documented in this file. The project does no
 - Added deterministic person-free image and mesh fixtures with a hash, license, source, privacy, and expected-result manifest.
 - Added portable Ruff, mypy, pytest, asset, dependency-audit, SBOM, and license-evidence tooling plus a read-only Linux/macOS quality workflow.
 - Added the B02 testing strategy and completion report with explicit Windows-only gaps.
+- Added strict immutable project, source-image, artifact, pipeline, stage-result, error, generator-capability, engine-manifest, and consent domain models.
+- Added deterministic clock and project-repository ports plus five generated Draft 2020-12 schemas.
+- Added domain/schema/contract/architecture tests and a pre-pytest macOS Qt repair launcher; the B03 gate passes 80 tests.
 
 ### Fixed
 

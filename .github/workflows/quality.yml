@@ -39,20 +39,21 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e ".[dev]"
 
-      - name: Reproduce and validate synthetic fixtures
+      - name: Reproduce and validate generated contracts and fixtures
         run: |
+          python -m scripts.generate_json_schemas
           python scripts/create_synthetic_fixtures.py
           python scripts/validate_assets.py
-          git diff --exit-code -- tests/fixtures
+          git diff --exit-code -- app/config/schemas tests/fixtures
 
       - name: Lint
-        run: python -m ruff check scripts tests
+        run: python -m ruff check app scripts tests
 
       - name: Type check
-        run: python -m mypy scripts tests
+        run: python -m mypy app scripts tests
 
       - name: Test
-        run: python -m pytest -q
+        run: python scripts/run_tests.py -q
 
       - name: Audit installed dependencies
         run: python -m pip_audit --local

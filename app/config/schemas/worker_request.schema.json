@@ -1,0 +1,99 @@
+{
+  "$id": "https://minifigure3dstudio.local/schemas/worker-request-v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "cancellation_token_relative_path": {
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$",
+      "type": "string"
+    },
+    "expected_outputs": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "relative_path": {
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$",
+            "type": "string"
+          },
+          "role": {
+            "pattern": "^[a-z][a-z0-9._-]{1,127}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "role",
+          "relative_path"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "inputs": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "artifact_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "relative_path": {
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$",
+            "type": "string"
+          },
+          "role": {
+            "pattern": "^[a-z][a-z0-9._-]{1,127}$",
+            "type": "string"
+          },
+          "sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "artifact_id",
+          "role",
+          "relative_path",
+          "sha256"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "parameters": {
+      "type": "object"
+    },
+    "protocol_version": {
+      "const": 1
+    },
+    "redaction_policy_version": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "request_id": {
+      "format": "uuid",
+      "type": "string"
+    },
+    "run_id": {
+      "format": "uuid",
+      "type": "string"
+    },
+    "stage_id": {
+      "pattern": "^[a-z][a-z0-9._-]{1,127}$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "protocol_version",
+    "request_id",
+    "run_id",
+    "stage_id",
+    "inputs",
+    "expected_outputs",
+    "parameters",
+    "cancellation_token_relative_path",
+    "redaction_policy_version"
+  ],
+  "title": "MiniFigure Worker Request",
+  "type": "object"
+}

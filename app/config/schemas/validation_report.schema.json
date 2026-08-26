@@ -1,0 +1,129 @@
+{
+  "$id": "https://minifigure3dstudio.local/schemas/validation-report-v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifact_id": {
+      "format": "uuid",
+      "type": "string"
+    },
+    "created_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "export_blocked": {
+      "type": "boolean"
+    },
+    "findings": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "automatic_repair_available": {
+            "type": "boolean"
+          },
+          "blocking": {
+            "type": "boolean"
+          },
+          "code": {
+            "pattern": "^[A-Z][A-Z0-9_]{2,127}$",
+            "type": "string"
+          },
+          "geometry_reference": {
+            "pattern": "^[a-z][a-z0-9._-]{1,127}$",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "measured_value": {
+            "type": [
+              "number",
+              "integer",
+              "string",
+              "null"
+            ]
+          },
+          "message_key": {
+            "pattern": "^[a-z][a-z0-9._-]{1,127}$",
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "info",
+              "warning",
+              "error"
+            ]
+          },
+          "threshold": {
+            "type": [
+              "number",
+              "integer",
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "code",
+          "severity",
+          "message_key",
+          "blocking",
+          "automatic_repair_available"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "metrics": {
+      "type": "object"
+    },
+    "recommended_orientation": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "report_id": {
+      "format": "uuid",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "enum": [
+        "ready_to_print",
+        "ready_with_warnings",
+        "repair_required"
+      ]
+    },
+    "support_requirement": {
+      "enum": [
+        "none",
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "validator_versions": {
+      "additionalProperties": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minProperties": 1,
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "report_id",
+    "artifact_id",
+    "created_at",
+    "validator_versions",
+    "findings",
+    "status",
+    "export_blocked",
+    "recommended_orientation",
+    "support_requirement"
+  ],
+  "title": "MiniFigure Validation Report",
+  "type": "object"
+}
