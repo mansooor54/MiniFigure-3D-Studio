@@ -1,0 +1,91 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.hypothesis/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.pfx
+*.p12
+secrets/
+credentials/
+
+# IDE and operating-system files
+.vscode/
+.idea/
+*.code-workspace
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build and package output
+build/
+dist/
+*.spec.local
+*.egg-info/
+installer-output/
+artifacts/
+reports/generated/
+
+# Viewer dependencies and generated bundle
+viewer/node_modules/
+assets/viewer/dist/
+viewer/coverage/
+
+# Downloaded engines, model weights, and native runtimes
+engines/
+models/
+weights/
+downloads/
+*.onnx
+*.safetensors
+*.ckpt
+*.pth
+*.pt
+*.bin
+*.engine
+
+# User projects and sensitive media
+projects/
+workspace/
+recovery/
+logs/
+diagnostics/
+*.mf3dsproj
+*.blend1
+
+# Local test/run output
+.test-output/
+.tmp/
+tmp/
+*.log
+*.pid
+
+# Large generated 3D/media artifacts outside declared fixtures
+*.stl
+*.3mf
+*.glb
+*.gltf
+*.obj
+*.mtl
+*.ply
+*.fbx
+*.exr
+
+# Fixture exceptions must be explicitly unignored next to their manifest.
