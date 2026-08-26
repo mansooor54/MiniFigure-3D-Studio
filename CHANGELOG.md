@@ -23,6 +23,9 @@ All notable project changes will be documented in this file. The project does no
 - Added portable project layouts, Unicode/Windows-safe generated names, strict root containment, and symlink/reparse-point guards.
 - Added validated atomic file replacement and deterministic bounded artifact hashing with injected-failure coverage.
 - Added Arabic, long-path, traversal, link, hash, and atomic-write tests; the B04 portable gate passes 113 tests.
+- Added validated local project manifests, UUID workspaces, recent-project discovery, immutable artifact promotion, and categorized inventory.
+- Added durable checkpoint/journal recovery, explicit recovery decisions, and truthful schema-migration dispatch without a fake v2 route.
+- Added identity- and active-use-gated logical project deletion with reparse refusal and storage-limitation receipts; the B05 portable gate passes 142 tests.
 
 ### Fixed
 
