@@ -26,6 +26,9 @@ All notable project changes will be documented in this file. The project does no
 - Added validated local project manifests, UUID workspaces, recent-project discovery, immutable artifact promotion, and categorized inventory.
 - Added durable checkpoint/journal recovery, explicit recovery decisions, and truthful schema-migration dispatch without a fake v2 route.
 - Added identity- and active-use-gated logical project deletion with reparse refusal and storage-limitation receipts; the B05 portable gate passes 142 tests.
+- Added stable structured event IDs, recursive secret/path/image redaction, rotating JSON logs, and bounded retention/excerpts.
+- Added strict offline-first local settings with opaque secret references, protected no-interpolation `.env` import, and closeable secret values.
+- Added a Windows Credential Manager adapter boundary with portable injected-backend contracts; the B06 portable gate passes 169 tests.
 
 ### Fixed
 
