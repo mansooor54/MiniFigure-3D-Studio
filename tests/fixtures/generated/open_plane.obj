@@ -1,0 +1,6 @@
+# Deterministic open plane with one boundary loop
+v -1.0 -1.0 0.0
+v 1.0 -1.0 0.0
+v 1.0 1.0 0.0
+v -1.0 1.0 0.0
+f 1 2 3 4

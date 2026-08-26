@@ -38,7 +38,7 @@ This report is also B01 evidence.
 
 The first isolated Linux clone could not publish because its GitHub integration lacked `contents:write`, and it could not provide target-platform evidence. The connected desktop repository was then inspected. Its Stage 1 `main` history was clean and preserved, `stage2/m0-b01` already existed remotely at the Stage 1 head, and the desktop Git identity and HTTPS transport were available.
 
-The connected computer is macOS 26.5.2 on Apple Silicon. Homebrew's direct `python@3.11` installation failed with an unsupported `bootstrap_cpython` step after dependency installation. The repair installed `uv` 0.12.6, which installed an isolated Python 3.11.16 runtime. This repair changes the development baseline only and is not Windows evidence.
+The connected computer is macOS 26.5.2 on Apple Silicon. Homebrew's direct `python@3.11` installation failed with an unsupported `bootstrap_cpython` step after dependency installation. The repair installed `uv` 0.12.6, which installed an isolated Python 3.11.16 runtime. PySide6 6.9.3 passed a direct Qt smoke but reproducibly aborted when QtTest initialized the offscreen platform; PySide6 6.10.3 resolved that failure. These repairs change the development baseline only and are not Windows evidence.
 
 ## Checks Executed
 
@@ -53,7 +53,7 @@ The connected computer is macOS 26.5.2 on Apple Silicon. Homebrew's direct `pyth
 | Dependency installation | macOS ARM64, Python 3.11.16 | Passed | Runtime and development dependencies installed in ignored `.venv`; the project installed editable. |
 | Core imports | macOS ARM64, Python 3.11.16 | Passed | PySide6, jsonschema, platformdirs, psutil, Pydantic, python-dotenv, PyYAML, and structlog imported. |
 | Qt plugin visibility repair | macOS ARM64, ignored `.venv` | Passed | `uv`-extracted PySide6 plugins carried the macOS hidden file flag, so Qt scanned the directory but did not recognize platform plugins. Clearing the hidden flag on the ignored plugin tree restored discovery. |
-| Qt smoke test | macOS ARM64, PySide6 6.9.3 | Passed | With the explicit installed plugin root, an offscreen `QApplication` created, displayed, processed, and closed a widget. |
+| Qt smoke test | macOS ARM64, PySide6 6.10.3 | Passed | With the explicit installed plugin root, an offscreen `QApplication` created, displayed, processed, and closed a widget. |
 | Arabic path round trip | macOS ARM64 | Passed | An Arabic directory and filename were created, written, read, and removed successfully. |
 | Dependency audit, initial | Installed environment | Failed then repaired | `pip-audit` found `PYSEC-2026-1845` in pytest 8.4.2 with fixed release 9.0.3. |
 | Dependency audit, final | Installed environment with pytest 9.1.1 | Passed | No known dependency vulnerabilities were reported; the unpublished local project was correctly skipped as non-PyPI. |
@@ -61,7 +61,7 @@ The connected computer is macOS 26.5.2 on Apple Silicon. Homebrew's direct `pyth
 
 ## Installed Candidate Snapshot
 
-The repaired environment includes Python 3.11.16, PySide6 6.9.3, pytest 9.1.1, pytest-qt 4.5.0, Ruff 0.16.4, mypy 1.20.2, Pydantic 2.13.4, psutil 7.2.2, PyYAML 6.0.3, structlog 25.5.0, and python-dotenv 1.2.3. These are Stage 2 development candidates. Exact Windows locks, Qt plugin inventory, SBOM, notices, and vulnerability results must be regenerated on native Windows before a release claim.
+The repaired environment includes Python 3.11.16, PySide6 6.10.3, pytest 9.1.1, pytest-qt 4.5.0, Ruff 0.16.4, mypy 1.20.2, Pydantic 2.13.4, psutil 7.2.2, PyYAML 6.0.3, structlog 25.5.0, and python-dotenv 1.2.3. These are Stage 2 development candidates. Exact Windows locks, Qt plugin inventory, SBOM, notices, and vulnerability results must be regenerated on native Windows before a release claim.
 
 ## Not Executed
 

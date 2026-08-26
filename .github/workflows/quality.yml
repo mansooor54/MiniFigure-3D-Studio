@@ -1,0 +1,72 @@
+name: quality
+
+on:
+  push:
+    branches:
+      - main
+      - "stage2/**"
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  portable-quality:
+    name: Python 3.11 / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+    env:
+      PIP_DISABLE_PIP_VERSION_CHECK: "1"
+      PYTHONDONTWRITEBYTECODE: "1"
+      QT_QPA_PLATFORM: offscreen
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install project and development tools
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+
+      - name: Reproduce and validate synthetic fixtures
+        run: |
+          python scripts/create_synthetic_fixtures.py
+          python scripts/validate_assets.py
+          git diff --exit-code -- tests/fixtures
+
+      - name: Lint
+        run: python -m ruff check scripts tests
+
+      - name: Type check
+        run: python -m mypy scripts tests
+
+      - name: Test
+        run: python -m pytest -q
+
+      - name: Audit installed dependencies
+        run: python -m pip_audit --local
+
+      - name: Generate dependency evidence
+        run: |
+          python scripts/generate_sbom.py
+          python scripts/collect_licenses.py
+
+      - name: Upload generated dependency evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-evidence-${{ matrix.os }}
+          path: reports/generated/
+          if-no-files-found: error
+          retention-days: 14

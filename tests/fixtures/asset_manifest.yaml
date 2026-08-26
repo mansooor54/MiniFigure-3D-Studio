@@ -1,0 +1,61 @@
+schema_version: 1
+policy:
+  real_person_assets_allowed: false
+  unmanifested_binary_assets_allowed: false
+assets:
+- path: generated/checker_64.ppm
+  media_type: image/x-portable-pixmap
+  source: scripts/create_synthetic_fixtures.py
+  generator_version: 1
+  license: CC0-1.0
+  sha256: 42eb71c4f3d3db789c9fa72b905f1574ec74d6c8d32d5a7b8ba9bef57129bc1e
+  size_bytes: 12301
+  contains_real_person: false
+  contains_exif: false
+  purpose: High-frequency image-quality and deterministic decoding fixture.
+  expected:
+    width: 64
+    height: 64
+    contains_exif: false
+- path: generated/gradient_64.ppm
+  media_type: image/x-portable-pixmap
+  source: scripts/create_synthetic_fixtures.py
+  generator_version: 1
+  license: CC0-1.0
+  sha256: 09d89889b6af0ed01f8850e5bd72d82dd382f427dd889647123259ef93bd5778
+  size_bytes: 12301
+  contains_real_person: false
+  contains_exif: false
+  purpose: Exposure and intensity-distribution image fixture.
+  expected:
+    width: 64
+    height: 64
+    contains_exif: false
+- path: generated/unit_cube.obj
+  media_type: model/obj
+  source: scripts/create_synthetic_fixtures.py
+  generator_version: 1
+  license: CC0-1.0
+  sha256: 8e764408a29828c1619c7dfd04559f911ae67784bfed6aa306968f414ae0a116
+  size_bytes: 221
+  contains_real_person: false
+  contains_exif: false
+  purpose: Closed synthetic mesh with known bounds and six polygon faces.
+  expected:
+    vertex_count: 8
+    face_count: 6
+    watertight: true
+- path: generated/open_plane.obj
+  media_type: model/obj
+  source: scripts/create_synthetic_fixtures.py
+  generator_version: 1
+  license: CC0-1.0
+  sha256: 4202400853a2c2bd6567508e4beb94061d922d4a1e9c560891d15ef90a942ce6
+  size_bytes: 120
+  contains_real_person: false
+  contains_exif: false
+  purpose: Open synthetic mesh for negative topology and repair tests.
+  expected:
+    vertex_count: 4
+    face_count: 1
+    watertight: false

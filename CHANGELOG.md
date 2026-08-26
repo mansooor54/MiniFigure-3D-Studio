@@ -13,12 +13,15 @@ All notable project changes will be documented in this file. The project does no
 - Added private-development license status, third-party notice index, security policy, privacy policy, and contribution rules.
 - Completed B01 repository metadata and quality configuration on the isolated Stage 2 branch.
 - Added the connected-desktop platform exception that preserves all Windows-only test gaps.
-- Installed and verified an isolated Python 3.11.16 development environment with PySide6 6.9.3.
+- Installed and verified an isolated Python 3.11.16 development environment with PySide6 6.10.3.
+- Added deterministic person-free image and mesh fixtures with a hash, license, source, privacy, and expected-result manifest.
+- Added portable Ruff, mypy, pytest, asset, dependency-audit, SBOM, and license-evidence tooling plus a read-only Linux/macOS quality workflow.
+- Added the B02 testing strategy and completion report with explicit Windows-only gaps.
 
 ### Fixed
 
 - Upgraded pytest from vulnerable 8.4.2 to 9.1.1 after `pip-audit` identified `PYSEC-2026-1845`; the repeated audit reports no known dependency vulnerabilities.
-- Cleared an unexpected macOS hidden flag from the ignored PySide6 plugin tree so the offscreen Qt platform plugin could be discovered during the B01 smoke test.
+- Rejected PySide6 6.9.3 after a reproducible macOS QtTest/platform-plugin abort and upgraded to PySide6 6.10.3, then cleared an unexpected hidden flag from the ignored plugin tree so offscreen tests could run reliably.
 
 ### Not Yet Implemented
 

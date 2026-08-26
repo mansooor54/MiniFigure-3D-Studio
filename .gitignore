@@ -89,3 +89,5 @@ tmp/
 *.exr
 
 # Fixture exceptions must be explicitly unignored next to their manifest.
+!tests/fixtures/generated/unit_cube.obj
+!tests/fixtures/generated/open_plane.obj
