@@ -1,0 +1,74 @@
+flowchart LR
+    subgraph P1[Project]
+        A1[1. New Project]
+        A2[2. Name, Folder, Permission]
+        A3[Choose Fast AI or Accurate Scan]
+        A1 --> A2 --> A3
+    end
+
+    subgraph P2[Photos]
+        B1[3. Import by Drag and Drop]
+        B2[4. Assign or Confirm Views]
+        B3[5. Quality and Coverage]
+        B4[6. Automatic Background Removal]
+        B5[7. Manual Mask Correction]
+        B1 --> B2 --> B3 --> B4 --> B5
+    end
+
+    subgraph P3[Design]
+        C1[8. Select Figure Style]
+        C2[9. Dimensions, Base, Printer and Color Settings]
+        C1 --> C2
+    end
+
+    subgraph P4[Build]
+        D1[10. Review and Generate]
+        D2[11. Integrated 3D Preview]
+        D3[12. Repair and Optimize]
+        D4[13. Printable Color Separation]
+        D1 --> D2 --> D3 --> D4
+    end
+
+    subgraph P5[Verify and Deliver]
+        E1[14. Printability Validation]
+        E2{Status}
+        E3[Ready to Print]
+        E4[Ready with Warnings]
+        E5[Repair Required]
+        E6[15. Transactional Export]
+        E1 --> E2
+        E2 --> E3 --> E6
+        E2 --> E4 --> E6
+        E2 --> E5
+    end
+
+    A3 --> B1
+    B5 --> C1
+    C2 --> D1
+    D4 --> E1
+    E5 --> D3
+
+    A3 -. Fast AI guidance .-> F[1-6 photos\nOne primary model input]
+    A3 -. Accurate Scan guidance .-> G[24-80 overlapping photos\nStill subject and even lighting]
+    F -.-> B1
+    G -.-> B1
+
+    B3 -. Replace or add photos .-> B1
+    B5 -. Re-run mask model .-> B4
+    D2 -. Compare raw and processed .-> D3
+    D4 -. Texture mode may bypass separation .-> E1
+
+    classDef project fill:#0D2136,stroke:#D7AE55,color:#F6F8FB,stroke-width:2px;
+    classDef photos fill:#12304A,stroke:#5BA8E6,color:#F6F8FB;
+    classDef design fill:#2B2640,stroke:#D7AE55,color:#F6F8FB;
+    classDef build fill:#14304B,stroke:#48B786,color:#F6F8FB;
+    classDef verify fill:#102D2A,stroke:#48B786,color:#F6F8FB;
+    classDef decision fill:#2E2230,stroke:#E3A63B,color:#F6F8FB;
+    classDef error fill:#351B25,stroke:#E35D68,color:#F6F8FB;
+    class A1,A2,A3 project;
+    class B1,B2,B3,B4,B5,F,G photos;
+    class C1,C2 design;
+    class D1,D2,D3,D4 build;
+    class E1,E3,E4,E6 verify;
+    class E2 decision;
+    class E5 error;

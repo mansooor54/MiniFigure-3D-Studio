@@ -1,0 +1,74 @@
+flowchart LR
+    U[User]
+
+    subgraph DESKTOP[MiniFigure 3D Studio - Python 3.11 / PySide6]
+        UI[Presentation Layer\nWizard, Viewer Shell, Reports]
+        APP[Application Layer\nUse Cases and Pipeline Orchestrator]
+        DOM[Domain Layer\nProjects, Artifacts, Settings, Findings]
+        PORTS[Typed Ports\nGenerators, Maskers, Validators, Exporters]
+        SUP[Process Supervisor\nQProcess, Progress, Cancel, Retry]
+        STORE[Project Repository\nAtomic Manifest and Job Journal]
+        SEC[Consent and Secret Services\nCredential References and Redaction]
+        VIEW[Viewer Bridge\nValidated WebChannel Messages]
+    end
+
+    subgraph LOCAL[Local Worker and Engine Boundary]
+        IMG[Image Analysis Worker\nQuality and Mask Adapter]
+        HY[Hunyuan Adapter Worker\nSeparate Runtime and License Gate]
+        BL[Blender Background Process\nRepair, Style, Base, Render, Export]
+        CO[COLMAP CLI Chain\nSfM and MVS]
+        V3[Qt WebEngine + Bundled Three.js\nNetwork Denied]
+        EX[Export Validators\nlib3mf and Independent Re-open]
+    end
+
+    subgraph DATA[Local Data]
+        PRJ[(Project Workspace\nOriginals, Masks, Runs, Artifacts)]
+        ENG[(Engine Packages\nVersions, Hashes, Licenses)]
+        CREDS[(Windows Credential Manager / DPAPI)]
+    end
+
+    subgraph REMOTE[Optional External Boundary]
+        GATE{Named Provider\nDisclosure and Consent}
+        API[External Generator API]
+    end
+
+    U --> UI
+    UI --> APP
+    APP --> DOM
+    APP --> PORTS
+    APP --> SUP
+    APP --> STORE
+    APP --> SEC
+    UI --> VIEW
+
+    SUP --> IMG
+    SUP --> HY
+    SUP --> BL
+    SUP --> CO
+    VIEW --> V3
+    PORTS --> EX
+
+    STORE <--> PRJ
+    IMG <--> PRJ
+    HY <--> PRJ
+    BL <--> PRJ
+    CO <--> PRJ
+    V3 --> PRJ
+    EX <--> PRJ
+
+    HY --> ENG
+    BL --> ENG
+    CO --> ENG
+    SEC --> CREDS
+    SEC --> GATE
+    GATE -->|Approved HTTPS transfer only| API
+    API -->|Validated result| PRJ
+
+    classDef desktop fill:#0D2136,stroke:#D7AE55,color:#F6F8FB,stroke-width:2px;
+    classDef engine fill:#14304B,stroke:#5BA8E6,color:#F6F8FB;
+    classDef data fill:#102638,stroke:#48B786,color:#F6F8FB;
+    classDef external fill:#301B26,stroke:#E35D68,color:#F6F8FB;
+    class UI,APP,DOM,PORTS,SUP,STORE,SEC,VIEW desktop;
+    class IMG,HY,BL,CO,V3,EX engine;
+    class PRJ,ENG,CREDS data;
+    class GATE,API external;

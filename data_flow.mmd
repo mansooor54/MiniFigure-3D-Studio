@@ -1,0 +1,69 @@
+flowchart TD
+    A[Create Project\nPermission Reminder] --> B[Import Photos\nImmutable Managed Copies]
+    B --> C[Quality, Duplicate, Exposure, Blur, Coverage Checks]
+    C --> D[View Assignment and User Review]
+    D --> E[Background Mask Generation]
+    E --> F[Manual Mask Correction and Approval]
+    F --> G{Generation Mode}
+
+    G -->|Fast AI: 1-6 photos| H[Select One Primary Front or 45-degree Image]
+    H --> I[Analyze Remaining Photos as Separate Color References]
+    I --> J{Generator Location}
+    J -->|Local| K[Engine and License Preflight\nGPU, VRAM, Disk, Version, Territory]
+    K --> L[Hunyuan Adapter\nPrimary Image Only]
+    J -->|External| M[Named Provider Disclosure]
+    M --> N{Explicit Transfer Consent}
+    N -->|Declined| O[Return to Local or Other Adapter]
+    N -->|Approved| P[Strip Unneeded Metadata\nSend Minimum Data by HTTPS]
+    P --> Q[Validate Remote Result]
+    L --> R[Raw Mesh and Optional PBR Textures]
+    Q --> R
+
+    G -->|Accurate Scan: 24-80 photos| S[Capture Guidance and Angle Coverage Preflight]
+    S --> T[COLMAP Feature Extraction and Matching]
+    T --> U[Sparse Reconstruction\nCameras and Sparse Points]
+    U --> V{Sparse Output Valid?}
+    V -->|No| W[Actual Failure Reason\nCorrective Steps and Retry]
+    V -->|Yes| X[Measured Camera Coverage]
+    X --> Y[Undistort, Dense Stereo, Fusion, Meshing]
+    Y --> Z{Dense Output Valid?}
+    Z -->|No| W
+    Z -->|Yes| R
+
+    R --> BA[Commit Immutable Raw Artifact and Backup]
+    BA --> BB[Blender Background Pipeline\nCleanup, Repair, Style, Base, Scale, Preview]
+    BB --> BC{Structured Result and Artifact Validation}
+    BC -->|Failed| BD[Preserve Last Checkpoint\nShow Error, Retry, or Reconfigure]
+    BC -->|Passed| BE[Processed Mesh Artifact]
+
+    BE --> BF{Appearance Path}
+    BF -->|Texture Mode| BG[Preserve PBR Materials and Maps]
+    BF -->|Filament Mode| BH[Quantize Palette and Separate Parts or Regions]
+    BH --> BI[Manual Part and Color Review\nMerge Similar or Tiny Regions]
+
+    BG --> BJ[Printability Validators]
+    BI --> BJ
+    BJ --> BK{Derived Status}
+    BK -->|Repair Required| BL[Highlight Problems in Red\nReturn to Repair]
+    BL --> BB
+    BK -->|Ready or Warnings| BM[Select Export Formats]
+    BM --> BN[Write to Staging]
+    BN --> BO[Reopen and Validate Geometry, Units, Parts, Materials]
+    BO --> BP{Export Valid?}
+    BP -->|No| BQ[Keep as Invalid Staging Artifact\nNever Report Success]
+    BP -->|Yes| BR[Atomic Finalize\nSTL, 3MF, OBJ, GLB, BLEND]
+
+    BR --> BS{Retention Choice}
+    BS -->|Keep Project| BT[Retain According to Policy]
+    BS -->|Delete Originals| BU[Remove Managed Originals\nExplain Remaining Derived Likeness Data]
+    BS -->|Delete Project| BV[Stop Jobs, Close Handles, Inventory and Delete]
+    BV --> BW[Deletion Receipt\nReport Remaining Items]
+
+    classDef normal fill:#0D2136,stroke:#D7AE55,color:#F6F8FB;
+    classDef decision fill:#2A2330,stroke:#E3A63B,color:#F6F8FB;
+    classDef error fill:#351B25,stroke:#E35D68,color:#F6F8FB;
+    classDef success fill:#123126,stroke:#48B786,color:#F6F8FB;
+    class A,B,C,D,E,F,H,I,K,L,M,O,P,Q,R,S,T,U,X,Y,BA,BB,BE,BG,BH,BI,BJ,BM,BN,BO,BS,BT,BU,BV normal;
+    class G,J,N,V,Z,BC,BF,BK,BP decision;
+    class W,BD,BL,BQ error;
+    class BR,BW success;
