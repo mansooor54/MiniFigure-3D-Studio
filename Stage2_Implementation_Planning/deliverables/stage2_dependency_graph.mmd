@@ -1,0 +1,59 @@
+flowchart LR
+    M0[M0 Decisions and Workspace]
+    M1[M1 Repository and Quality]
+    M2[M2 Domain, Storage, Recovery]
+    M3[M3 Bilingual Desktop Shell]
+    M4[M4 Worker Protocol and Supervision]
+    M5[M5 Image Import and Quality]
+    M6[M6 Background Removal and Masks]
+    M7[M7 Offline 3D Viewer]
+    M8[M8 Blender Cleanup Slice]
+    M9[M9 Real Fast AI Adapter]
+    M10[M10 End-to-End Orchestration]
+    M11[M11 Validation and STL/GLB Export]
+    M12[M12 MVP Hardening and Approval]
+
+    M0 --> M1 --> M2 --> M3
+    M2 --> M4
+    M3 --> M4
+    M3 --> M5
+    M4 --> M5 --> M6
+    M3 --> M7
+    M4 --> M7
+    M4 --> M8
+    M7 --> M8
+    M4 --> M9
+    M6 --> M9
+    M0 -. Engine and license gate .-> M9
+    M5 --> M10
+    M6 --> M10
+    M7 --> M10
+    M8 --> M10
+    M9 --> M10
+    M8 --> M11
+    M10 --> M11 --> M12
+
+    G0{Workspace bound?}
+    G1{Model rights approved?}
+    G2{Generator eligible and usable?}
+    G3{All mandatory tests passed?}
+
+    G0 -->|Yes| M0
+    G0 -->|No| STOP0[Planning only; no source creation]
+    G1 -->|Yes| M6
+    G1 -->|No| STOP1[Manual-mask path and fake adapter only]
+    G2 -->|Yes| M9
+    G2 -->|No| STOP2[Select another approved adapter]
+    M12 --> G3
+    G3 -->|Yes| DONE[Stop and request Stage 2 approval]
+    G3 -->|No| FIX[Fix, rerun, and remain in Stage 2]
+    FIX --> M12
+
+    classDef core fill:#0D2136,stroke:#D7AE55,color:#F6F8FB,stroke-width:2px;
+    classDef gate fill:#2A2330,stroke:#E3A63B,color:#F6F8FB,stroke-width:2px;
+    classDef stop fill:#351B25,stroke:#E35D68,color:#F6F8FB;
+    classDef done fill:#123126,stroke:#48B786,color:#F6F8FB,stroke-width:2px;
+    class M0,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12 core;
+    class G0,G1,G2,G3 gate;
+    class STOP0,STOP1,STOP2,FIX stop;
+    class DONE done;
