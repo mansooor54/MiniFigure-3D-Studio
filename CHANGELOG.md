@@ -20,6 +20,9 @@ All notable project changes will be documented in this file. The project does no
 - Added strict immutable project, source-image, artifact, pipeline, stage-result, error, generator-capability, engine-manifest, and consent domain models.
 - Added deterministic clock and project-repository ports plus five generated Draft 2020-12 schemas.
 - Added domain/schema/contract/architecture tests and a pre-pytest macOS Qt repair launcher; the B03 gate passes 80 tests.
+- Added portable project layouts, Unicode/Windows-safe generated names, strict root containment, and symlink/reparse-point guards.
+- Added validated atomic file replacement and deterministic bounded artifact hashing with injected-failure coverage.
+- Added Arabic, long-path, traversal, link, hash, and atomic-write tests; the B04 portable gate passes 113 tests.
 
 ### Fixed
 
