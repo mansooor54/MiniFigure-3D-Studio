@@ -1,0 +1,13 @@
+# Install the project development extra from pyproject.toml when possible.
+# This file preserves the requested repository layout and lists direct tools.
+
+-r requirements.txt
+coverage[toml]>=7.6,<8
+cyclonedx-bom>=5,<8
+hypothesis>=6.120,<7
+mypy>=1.14,<2
+pip-audit>=2.7,<3
+pytest>=9.0.3,<10
+pytest-qt>=4.4,<5
+ruff>=0.9,<1
+types-PyYAML>=6.0,<7

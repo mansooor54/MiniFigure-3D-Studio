@@ -1,0 +1,12 @@
+# Direct Stage 2 core runtime dependencies.
+# Exact transitive versions and hashes will be frozen only after native Windows
+# compatibility, Qt plugin, and clean-environment tests pass.
+
+PySide6>=6.8,<6.10
+jsonschema>=4.23,<5
+platformdirs>=4.3,<5
+psutil>=6.1,<8
+pydantic>=2.10,<3
+python-dotenv>=1.0,<2
+PyYAML>=6.0,<7
+structlog>=25.1,<26
